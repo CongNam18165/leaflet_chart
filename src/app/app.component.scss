@@ -1,0 +1,36 @@
+.container-info {
+    & h1 {
+        margin: 5px 2px;
+    }
+}
+.container-map{
+display: flex;
+justify-content: space-between;
+margin-top: 24px;
+}
+.box-date {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+
+    & .box-time {
+        margin-bottom: 8px;
+        margin-left: 8px;
+        & p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        & select {
+            outline: none;
+            width: 100px;
+            border: none;
+            border-bottom: 1px solid #eee;
+        & option{
+            padding: 0;
+        }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #eee;
+
+    & p:last-child {
+        margin-left: 5px;
+    }
+}
+
+.positive {
+    background-color: purple;
+}
+
+.box-info {
+    padding: 8px 0px 8px 8px;
+    padding-left: 8px;
+    flex-basis: 24%;
+border-radius: 5px;
+    & p {
+        margin: 5px 0px;
+    }
+}
+
+.negative {
+    background-color: rgb(40, 148, 40);
+}
+
+.deaths {
+    background-color: red;
+}
+
+.fatality {
+    background-color: darkred;
+}

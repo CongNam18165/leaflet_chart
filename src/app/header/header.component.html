@@ -1,0 +1,30 @@
+<div class="container" *ngIf="data " >
+    <div class="positive box-info">
+        <div class="title">
+            <p><i class="fa-solid fa-user"></i></p>
+            <p>Số người dương tính</p>
+        </div>
+        <p >{{ data.positive | numberFormat  }}</p>
+    </div>
+    <div class="negative box-info">
+        <div class="title">
+            <p><i class="fa-solid fa-notes-medical"></i></p>
+            <p>Số người âm tính</p>
+        </div>
+        <p>{{ data.negative | numberFormat}}</p>
+    </div>
+    <div class="deaths box-info">
+        <div class="title">
+            <p><i class="fa-solid fa-skull"></i></p>
+            <p>Số người tử vong</p>
+        </div>
+        <p>{{ data.death | numberFormat }}</p>
+    </div>
+    <div class="fatality box-info">
+        <div class="title">
+            <p><i class="fa-solid fa-circle-exclamation"></i></p>
+            <p>Tỉ lệ tử vong</p>
+        </div>
+        <p>{{ (data.death/data.positive)*100 | numberFormat}} %</p>
+    </div>
+</div>
