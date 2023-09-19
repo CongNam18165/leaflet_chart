@@ -1,5 +1,6 @@
-<ngx-charts-line-chart id="my-chart"
-  [results]="lineChartData"
+<!-- [results]="lineChartData" -->
+<ngx-charts-bar-vertical id="my-chart"
+  [results]="barChartData"
   [xAxis]="true"
   [yAxis]="true"
   [legend]="true"
@@ -7,5 +8,7 @@
   [showYAxisLabel]="true"
   [xAxisLabel]="'Ngày'"
   [yAxisLabel]="'Số lượng'"
+  [barPadding]="16"
+  [showDataLabel]="true"
 >
-</ngx-charts-line-chart>
+</ngx-charts-bar-vertical>

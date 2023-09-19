@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { DataService } from '../data.service';
 import { DateFormatPipe } from '../date-format.pipe';
@@ -7,39 +7,107 @@ import { DateFormatPipe } from '../date-format.pipe';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnChanges, OnInit {
   constructor(private dataService: DataService, private dateFormat: DateFormatPipe) { }
-  lineChartData: any[] = []
+  @Input() valueMonth: any;
+  @Input() valueYear: any;
+  // lineChartData: any[] = []
+  barChartData: any[] = []
   datas: any
+  currentValue: any;
+  yearArray: any[] = []
+  monthArray: any[] = []
   ngOnInit(): void {
     this.dataService.getData()
       .subscribe((res) => {
+        // this.datas = res.slice().reverse();
         this.datas = res;
-        if (this.datas) {
-          this.lineChartData = [
-            {
-              name: 'Số người chết',
-              series: this.datas.map((data: any) => ({
-                name: this.dateFormat.transform(data.date.toString()),
-                value: data.death/10000
-              }))
-            },
-            {
-              name: 'Tỉ lệ tử vong',
-              series: this.datas.map((data: any) => ({
-                name: this.dateFormat.transform(data.date.toString()),
-                value:(data.positive !== 0 && data.positive !== null) ? (data.death / data.positive) * 100 : 0
-              }))
-            },
-            {
-              name: 'Số người mắc Covid',
-              series: this.datas.map((data: any) => ({
-                name: this.dateFormat.transform(data.date.toString()),
-                value: data.positive/1000000
-              }))
-            },
-          ];
-        }
       })
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    
+    if (changes['valueMonth'] && changes['valueMonth'].currentValue !== 'none' && changes['valueMonth'].currentValue !== '') {
+      if(this.valueYear === '' || this.valueYear === 'none'){
+      this.yearArray = [];
+      this.currentValue = this.datas.filter((data: any) => {
+        const dateStr = data.date.toString();
+        const month = dateStr.slice(4, 6);
+        return month === changes['valueMonth'].currentValue;
+      })
+      this.currentValue.forEach((data: any) => {
+        const year = data.date.toString().slice(0, 4);
+        if (!this.yearArray.includes(year)) {
+          this.yearArray.push(year)
+        }
+      })
+      //bar-chart
+      this.barChartData = this.yearArray.map((currentData) => {
+        return {
+          name: `Số người dương tính với Covid tháng ${this.valueMonth} của năm ${currentData}`,
+          value: this.currentValue
+            .filter((data: any) => data.date.toString().slice(0, 4) === currentData)[0].positive
+        }
+      })
+    }
+      // line-chart
+      //   this.lineChartData = this.yearArray.map((currentData) => {
+      //     return {
+      //       name: `Số người dương tính với Covid tháng ${this.valueMonth} của năm ${currentData}`,
+      //       series: this.currentValue
+      //         .filter((data: any) => data.date.toString().slice(0, 4) === currentData)
+      //         .map((data: any) => ({
+      //           name: this.dateFormat.transform(data.date.toString()),
+      //           value: (data.positive !== 0 && data.positive !== null) ? data.positive : 0
+      //         }))
+      //     }
+      //   })
+      // }
+    }
+     if (changes['valueYear'] && changes['valueYear'].currentValue !== 'none' && changes['valueYear'].currentValue !== '') {
+      if(this.valueMonth === '' || this.valueMonth === 'none'){
+      this.monthArray = []
+      this.currentValue = this.datas.filter((data: any) => {
+        const dateStr = data.date.toString();
+        const year = dateStr.slice(0, 4);
+        return year === changes['valueYear'].currentValue;
+      })
+
+      this.currentValue.forEach((data: any) => {
+        const month = data.date.toString().slice(4, 6);
+        if (!this.monthArray.includes(month)) {
+          this.monthArray.push(month)
+        }
+      })
+
+      this.barChartData = this.monthArray.map((currentData) => {
+        return {
+          name: `Tháng ${currentData}`,
+          value: this.currentValue
+            .filter((data: any) => data.date.toString().slice(4, 6) === currentData)[0].positive
+        }
+      })
+    }
+  }
+    if( this.valueMonth !== '' && this.valueMonth !== 'none' && this.valueYear !== '' && this.valueYear !== 'none') {
+      this.currentValue = this.datas.filter((data: any) => {
+        const dateStr = data.date.toString();
+        const year = dateStr.slice(0, 4);
+        return year === this.valueYear;
+      }).filter((data: any) => {
+        const dateStr = data.date.toString();
+        const month = dateStr.slice(4, 6);
+        return month === this.valueMonth;
+      })
+      this.barChartData = [
+        {
+          name: `Tháng ${this.valueMonth} của năm ${this.valueYear}`,
+          value: this.currentValue[0].positive
+        }
+      ]
+    }
+  }
 }
+
+
+
+

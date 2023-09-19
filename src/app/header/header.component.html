@@ -4,27 +4,27 @@
             <p><i class="fa-solid fa-user"></i></p>
             <p>Số người dương tính</p>
         </div>
-        <p >{{ data.positive | numberFormat  }}</p>
+        <p >{{ data.positive !== null ? (data.positive | numberFormat) : 'Chưa có COVID' }}</p>
     </div>
     <div class="negative box-info">
         <div class="title">
             <p><i class="fa-solid fa-notes-medical"></i></p>
             <p>Số người âm tính</p>
         </div>
-        <p>{{ data.negative | numberFormat}}</p>
+        <p>{{ data.negative !== null  ? (data.negative| numberFormat) : 'Chưa có người test Covid' }}</p>
     </div>
     <div class="deaths box-info">
         <div class="title">
             <p><i class="fa-solid fa-skull"></i></p>
             <p>Số người tử vong</p>
         </div>
-        <p>{{ data.death | numberFormat }}</p>
+        <p>{{ data.death !== null ? (data.death | numberFormat) : 'Chưa có người chết' }}</p>
     </div>
     <div class="fatality box-info">
         <div class="title">
             <p><i class="fa-solid fa-circle-exclamation"></i></p>
             <p>Tỉ lệ tử vong</p>
         </div>
-        <p>{{ (data.death/data.positive)*100 | numberFormat}} %</p>
+        <p>{{ (data.death/data.positive)*100  !== 0 ? ((data.death/data.positive)*100 | numberFormat ) + "%"  : 'Chưa có COVID' }} </p>
     </div>
 </div>

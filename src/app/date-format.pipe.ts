@@ -10,7 +10,7 @@ export class DateFormatPipe implements PipeTransform {
     const month = value.substring(4, 6);
     const day = value.substring(6, 8);
 
-    const parsedDate = `${day}/${month}/${year}`;
+    const parsedDate = `${day}/${month}`;
     return parsedDate;
   }
 

@@ -8,15 +8,38 @@
     <div class="box-date">
         <h1>Date</h1>
         <div class="box-time">
-            <p>Date & time</p>
+            <!-- <p>Date & time</p>
             <select [(ngModel)]="chooseValue" (change)="selectOption()">
                 <option *ngFor="let data of datasInApp">{{data.date.toString() | dateFormat}}</option>
+            </select> -->
+            <p>Date & time</p>
+            <select [(ngModel)]="valueMonth" (change)="selectMonth()">
+                <option selected disabled>Month</option>
+                <option value="01">Tháng 01</option>
+                <option value="02">Tháng 02</option>
+                <option value="03">Tháng 03</option>
+                <option value="04">Tháng 04</option>
+                <option value="05">Tháng 05</option>
+                <option value="06">Tháng 06</option>
+                <option value="07">Tháng 07</option>
+                <option value="08">Tháng 08</option>
+                <option value="09">Tháng 09</option>
+                <option value="10">Tháng 10</option>
+                <option value="11">Tháng 11</option>
+                <option value="12">Tháng 12</option>
+                <option value="none">None</option>
+            </select>
+            <select [(ngModel)]="valueYear" (change)="selectYear()">
+                <option selected disabled>Year</option>
+                <option value="2020">Năm 2020</option>
+                <option value="2021">Năm 2021</option>
+                <option value="none">None</option>
             </select>
         </div>
     </div>
-    <app-header [data]="selectedData || dataFinal"></app-header>
+    <app-header [data]="selectedDataheader || dataFinal"></app-header>
     <div class="container-map" >
         <app-leaflet style="width: 800px;"></app-leaflet>
-        <app-chart style="width: 1000px;" ></app-chart>
+        <app-chart [valueMonth]="valueMonth" [valueYear]="valueYear" style="width: 1000px;" ></app-chart>
     </div>
 </div>

@@ -6,7 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-datas:any
+// datas:any;
+valueMonth:string =""
+valueYear:string ="" 
+lineChartData: any[] = []
   constructor( private http: HttpClient) { }
   getData(): Observable<any>{
     return this.http.get('https://api.covidtracking.com/v1/us/daily.json')

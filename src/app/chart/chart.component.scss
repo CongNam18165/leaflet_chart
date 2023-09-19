@@ -1,3 +1,10 @@
 #my-chart{
     width: 1000px;
 }
+::ng-deep ngx-charts-bar-vertical .bar {
+    width: 50px; /* Đặt chiều rộng của mỗi cột thành 20% */
+    // margin-right: 200px; /* Đặt khoảng cách giữa các cột thành 20% */
+  }
+  ::ng-deep ngx-charts-bar-vertical .group {
+    margin-right: 10px; /* Điều chỉnh khoảng cách giữa các cột tại đây */
+  }
