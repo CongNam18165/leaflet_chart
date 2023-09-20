@@ -24,18 +24,18 @@ export class ChartComponent implements OnChanges, OnInit {
         this.datas = res;
       })
   }
-  getDate(){
-    
-  }
+ 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['valueMonth'] && changes['valueMonth'].currentValue !== 'none' && changes['valueMonth'].currentValue !== ''
     && this.valueYear === '' || this.valueYear === 'none') {
+      //reset mảng yearArray sau đó lọc mảng dữ liệu thô lấy từ API để lấy các dữ liệu có tháng mà mình chọn
         this.yearArray = [];
         this.currentValue = this.datas.filter((data: any) => {
           const dateStr = data.date.toString();
           const month = dateStr.slice(4, 6);
           return month === this.valueMonth;
         })
+        // thêm vào mảng yearArray các năm mà có trong data
         this.currentValue.forEach((data: any) => {
           const year = data.date.toString().slice(0, 4);
           if (!this.yearArray.includes(year)) {
@@ -43,6 +43,7 @@ export class ChartComponent implements OnChanges, OnInit {
           }
         })
         //bar-chart
+        //Gán dữ liệu biểu đồ
         this.barChartData = this.yearArray.map((currentData) => {
           return {
             name: `Số người dương tính với Covid tháng ${this.valueMonth} của năm ${currentData}`,
@@ -90,7 +91,6 @@ export class ChartComponent implements OnChanges, OnInit {
         })
     }
     if (this.valueMonth !== '' && this.valueMonth !== 'none' && this.valueYear !== '' && this.valueYear !== 'none') {
-      
       this.currentValue = this.datas.filter((data: any) => {
         const dateStr = data.date.toString();
         const year = dateStr.slice(0, 4);
@@ -100,7 +100,7 @@ export class ChartComponent implements OnChanges, OnInit {
         const month = dateStr.slice(4, 6);
         return month === this.valueMonth;
       })
-      console.log('3',this.currentValue)
+
       this.barChartData = [
         {
           name: `Tháng ${this.valueMonth} của năm ${this.valueYear}`,
