@@ -24,31 +24,33 @@ export class ChartComponent implements OnChanges, OnInit {
         this.datas = res;
       })
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  getDate(){
     
-    if (changes['valueMonth'] && changes['valueMonth'].currentValue !== 'none' && changes['valueMonth'].currentValue !== '') {
-      if(this.valueYear === '' || this.valueYear === 'none'){
-      this.yearArray = [];
-      this.currentValue = this.datas.filter((data: any) => {
-        const dateStr = data.date.toString();
-        const month = dateStr.slice(4, 6);
-        return month === changes['valueMonth'].currentValue;
-      })
-      this.currentValue.forEach((data: any) => {
-        const year = data.date.toString().slice(0, 4);
-        if (!this.yearArray.includes(year)) {
-          this.yearArray.push(year)
-        }
-      })
-      //bar-chart
-      this.barChartData = this.yearArray.map((currentData) => {
-        return {
-          name: `Số người dương tính với Covid tháng ${this.valueMonth} của năm ${currentData}`,
-          value: this.currentValue
-            .filter((data: any) => data.date.toString().slice(0, 4) === currentData)[0].positive
-        }
-      })
-    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['valueMonth'] && changes['valueMonth'].currentValue !== 'none' && changes['valueMonth'].currentValue !== ''
+    && this.valueYear === '' || this.valueYear === 'none') {
+        this.yearArray = [];
+        this.currentValue = this.datas.filter((data: any) => {
+          const dateStr = data.date.toString();
+          const month = dateStr.slice(4, 6);
+          return month === this.valueMonth;
+        })
+        this.currentValue.forEach((data: any) => {
+          const year = data.date.toString().slice(0, 4);
+          if (!this.yearArray.includes(year)) {
+            this.yearArray.push(year)
+          }
+        })
+        //bar-chart
+        this.barChartData = this.yearArray.map((currentData) => {
+          return {
+            name: `Số người dương tính với Covid tháng ${this.valueMonth} của năm ${currentData}`,
+            value: this.currentValue
+              .filter((data: any) => data.date.toString().slice(0, 4) === currentData)[0].positive
+          }
+        })
+      // }
       // line-chart
       //   this.lineChartData = this.yearArray.map((currentData) => {
       //     return {
@@ -63,32 +65,32 @@ export class ChartComponent implements OnChanges, OnInit {
       //   })
       // }
     }
-     if (changes['valueYear'] && changes['valueYear'].currentValue !== 'none' && changes['valueYear'].currentValue !== '') {
-      if(this.valueMonth === '' || this.valueMonth === 'none'){
-      this.monthArray = []
-      this.currentValue = this.datas.filter((data: any) => {
-        const dateStr = data.date.toString();
-        const year = dateStr.slice(0, 4);
-        return year === changes['valueYear'].currentValue;
-      })
+    if (changes['valueYear'] && changes['valueYear'].currentValue !== 'none' && changes['valueYear'].currentValue !== ''
+    && this.valueMonth === '' || this.valueMonth === 'none') {
+        this.monthArray = []
+        this.currentValue = this.datas.filter((data: any) => {
+          const dateStr = data.date.toString();
+          const year = dateStr.slice(0, 4);
+          return year === this.valueYear;
+        })
 
-      this.currentValue.forEach((data: any) => {
-        const month = data.date.toString().slice(4, 6);
-        if (!this.monthArray.includes(month)) {
-          this.monthArray.push(month)
-        }
-      })
+        this.currentValue.forEach((data: any) => {
+          const month = data.date.toString().slice(4, 6);
+          if (!this.monthArray.includes(month)) {
+            this.monthArray.push(month)
+          }
+        })
 
-      this.barChartData = this.monthArray.map((currentData) => {
-        return {
-          name: `Tháng ${currentData}`,
-          value: this.currentValue
-            .filter((data: any) => data.date.toString().slice(4, 6) === currentData)[0].positive
-        }
-      })
+        this.barChartData = this.monthArray.map((currentData) => {
+          return {
+            name: `Tháng ${currentData}`,
+            value: this.currentValue
+              .filter((data: any) => data.date.toString().slice(4, 6) === currentData)[0].positive
+          }
+        })
     }
-  }
-    if( this.valueMonth !== '' && this.valueMonth !== 'none' && this.valueYear !== '' && this.valueYear !== 'none') {
+    if (this.valueMonth !== '' && this.valueMonth !== 'none' && this.valueYear !== '' && this.valueYear !== 'none') {
+      
       this.currentValue = this.datas.filter((data: any) => {
         const dateStr = data.date.toString();
         const year = dateStr.slice(0, 4);
@@ -98,6 +100,7 @@ export class ChartComponent implements OnChanges, OnInit {
         const month = dateStr.slice(4, 6);
         return month === this.valueMonth;
       })
+      console.log('3',this.currentValue)
       this.barChartData = [
         {
           name: `Tháng ${this.valueMonth} của năm ${this.valueYear}`,
@@ -105,6 +108,7 @@ export class ChartComponent implements OnChanges, OnInit {
         }
       ]
     }
+
   }
 }
 
